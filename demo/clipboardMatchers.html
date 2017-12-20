@@ -6,19 +6,15 @@
     <style>
         #content-container {
             margin: 25px auto;
-            width: 400px;
+            width: 500px;
         }
         #editor-container {
             height: 100px;
-        }
-        em{
-            font-style:normal;
         }
     </style>
     <link rel="stylesheet" href="../dist/quill.snow.css">
 </head>
 <body>
-<em>test</em>
 <div id="content-container">
     <div id="toolbar-container">
         <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
@@ -27,20 +23,36 @@
     <div id="editor-container"></div>
 </div>
 
+
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
         integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
         crossorigin="anonymous"></script>
 <script src="../dist/quill.core.js"></script>
 <script src="../dist/quill.js"></script>
 <script>
-    $(document).ready(function() {
-        var quill = new Quill('#editor-container', {
+    function __Main () {
+        let editor = new Quill('#editor-container', {
             modules: {
                 toolbar: '#toolbar-container'
             },
-            theme: 'snow'
+            theme: 'snow',
+            bounds: document.querySelector('#content-container'),
+            clipboard: {
+                matchers: [
+                    [Node.ELEMENT_NODE, function(node, delta) {
+                        console.log(node, delta)
+                    }]
+                ]
+            }
         });
-    });
+
+        editor.clipboard.dangerouslyPasteHTML(`<blockquote><p>Firstname: Test</p><p>Firstname: Test2</p></blockquote>`)
+
+        console.log(editor)
+    }
+    window.onload = function () {
+      __Main()
+    }
 </script>
 </body>
 </html>

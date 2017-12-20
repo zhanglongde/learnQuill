@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #content-container {
+            margin: 25px auto;
+            width: 400px;
+        }
+        #editor-container {
+            height: 100px;
+        }
+        /*em{*/
+            /*font-style:normal;*/
+        /*}*/
+    </style>
+    <link rel="stylesheet" href="../dist/quill.snow.css">
+</head>
+<body>
+<em>test</em>
+<div id="content-container">
+    <div id="toolbar-container">
+        <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
+        <button class="ql-italic" data-toggle="tooltip" data-placement="bottom" title="Add italic text <cmd+i>"></button>
+    </div>
+    <div id="editor-container"></div>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+        crossorigin="anonymous"></script>
+<script src="../dist/quill.core.js"></script>
+<script src="../dist/quill.js"></script>
+<script>
+    $(document).ready(function() {
+        var quill = new Quill('#editor-container', {
+            modules: {
+                toolbar: '#toolbar-container'
+            },
+            theme: 'snow'
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #content-container {
+            margin: 25px auto;
+            width: 500px;
+        }
+        #editor-container {
+            height: 100px;
+        }
+    </style>
+    <link rel="stylesheet" href="../dist/quill.snow.css">
+</head>
+<body>
+<button id="btnReplaceBlot">获取blot</button>
+<div id="content-container">
+    <div id="toolbar-container">
+        <button class="ql-bold" data-toggle="tooltip" data-placement="bottom" title="Bold"></button>
+        <button class="ql-italic" data-toggle="tooltip" data-placement="bottom" title="Add italic text <cmd+i>"></button>
+    </div>
+    <div id="editor-container"></div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ="
+        crossorigin="anonymous"></script>
+<script src="../dist/quill.core.js"></script>
+<script src="../dist/quill.js"></script>
+<script>
+    function __Main () {
+        let editor = new Quill('#editor-container', {
+            modules: {
+                toolbar: '#toolbar-container'
+            },
+            theme: 'snow',
+            bounds: document.querySelector('#content-container')
+        });
+
+        editor.clipboard.dangerouslyPasteHTML(`<div><a href="mailto:longde.zhang@nextcont.com" style="font-family:verdana;font-size:13px" target="_blank">longde.zhang@nextcont.com</a>&nbsp;觉新&nbsp;</div>`)
+
+        let btnReplaceBlot = document.querySelector('#btnReplaceBlot')
+        btnReplaceBlot.addEventListener('click', () => {
+          editor.focus()
+          let range = editor.getSelection()
+          console.log('range:',range)
+          let rangeText = editor.getText(range.index, range.length)
+          console.log('range对应的文本:', rangeText)
+          let blots = editor.getLeaf(range.index)
+          console.log('range对应的Blot', blots)
+          let linkNode = blots[0].domNode.parentNode
+          console.log('range对应的Node', linkNode)
+          linkNode.setAttribute('href', linkNode.getAttribute('href'))
+          linkNode.innerHTML = linkNode.innerHTML + 'test'
+      })
+    }
+    window.onload = function () {
+      __Main()
+    }
+</script>
+</body>
+</html>
